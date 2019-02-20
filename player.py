@@ -14,15 +14,9 @@ class Player:
         self.wager = 0
         self.points = 0
 
-    def set_name(self):
-        player_name = input("Hi, Player {}! Please enter your name: ".format(self.player_num))
-        self.name = player_name
-
-    def buy_in(self):
-        while True:
-            try:
-                chips = int(input("Thanks {}! Now, please enter a buy-in amount (e.g. 1000): ".format(self.name)))
-                break
-            except ValueError:
-                continue
-        self.chips = chips
+    def set_wager(self, wager):
+        if wager <= self.chips:
+            self.wager = wager
+            self.chips -= wager
+        else:
+            return -1

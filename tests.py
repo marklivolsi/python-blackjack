@@ -32,14 +32,15 @@ class TestDeck(unittest.TestCase):
         self.assertEqual(len(deck.cards), 51)
 
 
-class TestPlayer(unittest.TestCase):
+# class TestPlayer(unittest.TestCase):
 
-    @patch('player.input', return_value='1234')
-    def test_buy_in(self, mock_input):
-        """ Test buy-in function correctly sets player chips """
-        player = Player()
-        player.buy_in()
-        self.assertEqual(player.chips, 1234)
+    # @patch('player.input', return_value='25')
+    # def test_set_wager(self, mock_input):
+    #     """ Test that setting a wager results in the correct wager and remaining number of chips """
+    #     player = Player()
+    #     player.set_wager()
+    #     self.assertEqual(player.wager, 25)
+    #     self.assertEqual(player.chips, 975)
 
 
 class TestGame(unittest.TestCase):
@@ -59,8 +60,8 @@ class TestGame(unittest.TestCase):
         self.assertEqual(game.quick_game, False)
 
     @patch('gameplay.set_num_players', return_value=7)
-    @patch.object(Player, 'buy_in', return_value=1234)
-    @patch.object(Player, 'set_name', return_value='Joe')
+    @patch('gameplay.input', return_value='Joe')
+    @patch('gameplay.get_int_input', return_value=1234)
     def test_initialize_players(self, mock1, mock2, mock3):
         """ Test the correct number of players are initialized for a normal game """
         game = Game()
@@ -68,13 +69,15 @@ class TestGame(unittest.TestCase):
         game.initialize_players()
         self.assertEqual(len(game.player_list), 7)
 
-    # @patch('helpers.get_input', return_value='7')
-    # @patch.object(Player, 'set_name', 'Joe')
-    # @patch.object(Player, 'buy_in', 1234)
-    # def test_set_num_players(self):
-    #     """ Test the correct number of players are initialized for a normal game """
-    #     self.assertEqual()
+    def test_draw_two_cards(self):
+        """ Test that two cards are drawn and removed from game deck """
+        game = Game()
+        game.initialize_players()
+        player = game.player_list[0]
+        game.draw_two_cards(player)
 
+        self.assertEqual(len(player.hand), 2)
+        self.assertEqual(len(game.deck.cards), 50)
 
 if __name__ == '__main__':
     unittest.main()

@@ -12,6 +12,34 @@ class Card:
         self.suit = suit
         self.point_value = point_dict[self.value]
 
+    def __repr__(self):
+        return self.value + ' of ' + self.suit
+
+    def __eq__(self, other):
+        if isinstance(other, Card):
+            return self.point_value == other.point_value
+        return NotImplemented
+
+    def __lt__(self, other):
+        if isinstance(other, Card):
+            return self.point_value < other.point_value
+        return NotImplemented
+
+    def __le__(self, other):
+        if isinstance(other, Card):
+            return self.point_value <= other.point_value
+        return NotImplemented
+
+    def __gt__(self, other):
+        if isinstance(other, Card):
+            return self.point_value > other.point_value
+        return NotImplemented
+
+    def __ge__(self, other):
+        if isinstance(other, Card):
+            return self.point_value >= other.point_value
+        return NotImplemented
+
 
 class Deck:
     def __init__(self):
