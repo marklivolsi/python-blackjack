@@ -14,23 +14,23 @@ class Card:
 
 
 class Deck:
-    def __init__(self, num_decks=1):
-        self.num_decks = num_decks
+    def __init__(self):
         self.cards = []
 
-    def new_deck(self):
-        for card in point_dict.keys():
-            for suit in suits:
-                self.cards.append(Card(card, suit))
+    def reload(self, num_decks=1):
+        for _ in range(0, num_decks):
+            for card in point_dict.keys():
+                for suit in suits:
+                    self.cards.append(Card(card, suit))
         shuffle(self.cards)
 
     def draw(self):
         if len(self.cards) == 0:
-            self.new_deck()
+            self.reload()
         return self.cards.pop()
 
 # deck = Deck()
-# deck.new_deck()
+# deck.reload()
 # for i in deck.cards:
 #     print(i.value+" of "+i.suit," : Value: ",i.point_value)
 #
