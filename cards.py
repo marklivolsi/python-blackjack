@@ -28,10 +28,3 @@ class Deck:
         if len(self.cards) == 0:
             self.reload()
         return self.cards.pop()
-
-# deck = Deck()
-# deck.reload()
-# for i in deck.cards:
-#     print(i.value+" of "+i.suit," : Value: ",i.point_value)
-#
-# print(len(deck.cards))

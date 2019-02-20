@@ -1,9 +1,12 @@
 import unittest
+from unittest.mock import patch
 
 from cards import Deck
+from gameplay import Game
 
 
 class TestDeck(unittest.TestCase):
+
     def test_num_cards(self):
         """ Test number of cards in deck is correct """
         d1, d13 = Deck(), Deck()
@@ -26,6 +29,21 @@ class TestDeck(unittest.TestCase):
 
         deck.draw()
         self.assertEqual(len(deck.cards), 51)
+
+
+class TestGame(unittest.TestCase):
+
+    @patch('gameplay.get_input', return_value='q')
+    def test_set_game_type_quick_game(self, mock_input):
+        game = Game()
+        game.set_game_type()
+        self.assertEqual(game.quick_game, True)
+
+    @patch('gameplay.get_input', return_value='n')
+    def test_set_game_type_normal(self, mock_input):
+        game = Game()
+        game.set_game_type()
+        self.assertEqual(game.quick_game, False)
 
 
 if __name__ == '__main__':
