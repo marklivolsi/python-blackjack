@@ -9,6 +9,15 @@ def get_int_input(text):
     return value
 
 
+def yes_no_choice(text):
+    choice = None
+    while choice not in ('y', 'n'):
+        choice = input(text)
+    if choice == 'y':
+        return True
+    return False
+
+
 def set_num_players(max_num):
     num_players = None
     while num_players not in range(1, max_num+1):

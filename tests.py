@@ -33,16 +33,76 @@ class TestDeck(unittest.TestCase):
         self.assertEqual(len(deck.cards), 51)
 
 
-# class TestPlayer(unittest.TestCase):
+class TestPlayer(unittest.TestCase):
 
-    # @patch('player.input', return_value='25')
-    # def test_set_wager(self, mock_input):
-    #     """ Test that setting a wager results in the correct wager and remaining number of chips """
-    #     player = Player()
-    #     player.set_wager()
-    #     self.assertEqual(player.wager, 25)
-    #     self.assertEqual(player.chips, 975)
+    def test_update_points(self):
+        """ Test that points are updated to correct value of cards in hand """
+        player = Player()
+        player.hand = [Card('Ace', 'Spades'), Card('Ace', 'Hearts'), Card('Queen', 'Diamonds')]  # Should be 22
+        player.update_points()
+        self.assertEqual(player.points, 22)
 
+    def test_set_wager(self):
+        """ Test that setting a wager results in correct wager, remaining chips, and returns -1 if bet is too large """
+        player = Player()
+        self.assertEqual(player.wager, 0)
+
+        a = player.set_wager(25)
+        self.assertEqual(player.wager, 25)
+        self.assertEqual(player.chips, 975)
+        self.assertEqual(a, None)
+
+        b = player.set_wager(976)
+        self.assertEqual(player.wager, 25)
+        self.assertEqual(player.chips, 975)
+        self.assertEqual(b, -1)
+
+    def test_hit(self):
+        """ Test that hit function removes one card from deck and places in player hand """
+        deck = Deck()
+        player = Player()
+        player.hit(deck)
+
+        self.assertEqual(len(player.hand), 1)
+        self.assertEqual(len(deck.cards), 51)
+
+    def test_double_down(self):
+        """ Test that double down doubles wager and deducts accordingly from chips """
+        player = Player()
+        player.set_wager(50)
+        player.double_down()
+
+        self.assertEqual(player.chips, 900)
+        self.assertEqual(player.wager, 100)
+
+    def test_surrender(self):
+        """ Test that surrender returns half of wager to chips, clears hand, and clears wager  """
+        deck = Deck()
+        player = Player()
+        player.hit(deck)
+        player.set_wager(50)
+        player.surrender()
+
+        self.assertEqual(player.wager, 0)
+        self.assertEqual(player.chips, 975)
+        self.assertEqual(len(player.hand), 0)
+
+    def test_split_wager(self):
+        """ Test split wager adds equal wager to split hand, removes correctly from chips, returns -1 if too large """
+        deck = Deck()
+        player = Player()
+        player.hit(deck)
+        player.hit(deck)
+        player.set_wager(50)
+        player.set_split_wager()
+
+        self.assertEqual(player.wager, 50)
+        self.assertEqual(player.split_wager, 50)
+        self.assertEqual(player.chips, 900)
+
+        player.set_wager(451)
+        a = player.set_split_wager()
+        self.assertEqual(a, -1)
 
 class TestGame(unittest.TestCase):
 
@@ -69,16 +129,6 @@ class TestGame(unittest.TestCase):
         game.quick_game = False
         game.initialize_players()
         self.assertEqual(len(game.player_list), 7)
-
-    def test_draw_two_cards(self):
-        """ Test that two cards are drawn and removed from game deck """
-        game = Game()
-        game.initialize_players()
-        player = game.player_list[0]
-        game.draw_two_cards(player)
-
-        self.assertEqual(len(player.hand), 2)
-        self.assertEqual(len(game.deck.cards), 50)
 
 
 class TestHelpers(unittest.TestCase):
