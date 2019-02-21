@@ -27,6 +27,12 @@ class Player:
     def update_points(self):
         self.points = sum_points_in_hand(self.hand)
 
+    def print_hand(self):
+        self.update_points()
+        print("{}'s hand: {} (point total: {}, bet: {}, remaining chips: {})".format(self.name, self.hand,
+                                                                                     self.points, self.wager,
+                                                                                     self.chips))
+
     def set_wager(self, wager):
         if wager <= self.chips:
             self.wager = wager
@@ -56,6 +62,11 @@ class Player:
 
     def split_cards(self):  # split wager will be set separately
         self.split_hand.append(self.hand.pop())
+
+    # def player_turn(self, deck):
+    #     self.update_points()
+    #     print("{}'s turn. This is your hand: {} (points: {})".format(self.name, self.hand, self.points))
+
 
         # self.split_hand.append(self.hand.pop())
         # if self.wager <= self.chips:

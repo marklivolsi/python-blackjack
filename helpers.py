@@ -18,6 +18,22 @@ def yes_no_choice(text):
     return False
 
 
+def player_choice(split, double_down):
+    choice = None
+    if not double_down and not split:
+        while choice not in ('hit', 'doubledown', 'split', 'surrender'):
+            choice = input("Would you like to hit, doubledown, split, or surrender?")
+        return choice
+    elif not double_down and split:
+        while choice not in ('hit', 'doubledown', 'surrender'):
+            choice = input("Would you like to hit, doubledown, or surrender?")
+        return choice
+    else:
+        while choice not in ('hit', 'surrender'):
+            choice = input("Would you like to hit or surrender?")
+        return choice
+
+
 def set_num_players(max_num):
     num_players = None
     while num_players not in range(1, max_num+1):

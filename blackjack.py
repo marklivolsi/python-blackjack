@@ -10,8 +10,12 @@ def main():
         game.initialize_players()
         while True:
             deck = Deck()
+            print("Dealing cards...")
             game.draw_hands(deck)
-
+            # game.update_all_points()
+            game.print_table()
+            for player in game.player_list:
+                pass  # player_turn
             break
         break
 
