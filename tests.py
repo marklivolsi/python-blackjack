@@ -1,7 +1,8 @@
 import unittest
 from unittest.mock import patch
 
-from cards import Deck
+from cards import Card, Deck
+from helpers import *
 from gameplay import Game
 from player import Player
 
@@ -78,6 +79,29 @@ class TestGame(unittest.TestCase):
 
         self.assertEqual(len(player.hand), 2)
         self.assertEqual(len(game.deck.cards), 50)
+
+
+class TestHelpers(unittest.TestCase):
+
+    def test_sum_points_in_hand(self):
+        """ Test that point totals are summed correctly for a given hand """
+        ace_spades = Card('Ace', 'Spades')  # 11 or 1 pts, depending on other cards
+        ace_hearts = Card('Ace', 'Hearts')
+        jack_hearts = Card('Jack', 'Hearts')  # 10 pts
+        two_clubs = Card('Two', 'Clubs')  # 2 pts
+        nine_diamonds = Card('Nine', 'Diamonds')  # 9 pts
+
+        hand1 = [ace_spades, jack_hearts]  # 21
+        hand2 = [jack_hearts, two_clubs]  # 12
+        hand3 = [nine_diamonds, two_clubs, jack_hearts]  # 21
+        hand4 = [ace_spades, jack_hearts, nine_diamonds, two_clubs]  # 22
+        hand5 = [ace_spades, ace_hearts]  # 12
+
+        self.assertEqual(sum_points_in_hand(hand1), 21)
+        self.assertEqual(sum_points_in_hand(hand2), 12)
+        self.assertEqual(sum_points_in_hand(hand3), 21)
+        self.assertEqual(sum_points_in_hand(hand4), 22)
+        self.assertEqual(sum_points_in_hand(hand5), 12)
 
 
 if __name__ == '__main__':
