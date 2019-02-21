@@ -12,10 +12,13 @@ def main():
             deck = Deck()
             print("Dealing cards...")
             game.draw_hands(deck)
-            # game.update_all_points()
-            game.print_table()
             for player in game.player_list:
-                pass  # player_turn
+                player.update_points()
+            game.print_table()
+            game.player_turn_loop(deck)
+
+            for player in game.player_list:
+                print(player, player.chips, player.wager, player.hand)
             break
         break
 

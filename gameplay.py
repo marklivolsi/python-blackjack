@@ -24,6 +24,7 @@ class Game:
             print("Dealer's hand: [{}, ???]".format(self.dealer.hand[0]))
         for player in self.player_list:
             player.print_hand()
+        print()
 
     def set_game_type(self):
         print("Would you like to play a quick game or a normal game? Quick games are one player versus the dealer,\n"
@@ -56,23 +57,25 @@ class Game:
 
     def draw_hands(self, deck):
         for _ in range(2):
-            self.dealer.hit(deck)
+            self.dealer.hit(deck, self.dealer.hand)
             for player in self.player_list:
-                player.hit(deck)
+                player.hit(deck, player.hand)
 
     # def update_all_points(self):
     #     for player in self.player_list:
     #         player.points = sum_points_in_hand(player.hand)
 
-    def player_turn_loop(self, player, deck):
-        for player in self.player_list:
-            player.update_points()
-            print("{}'s turn...".format(player.name))
-            player.print_hand()
 
-            double_down, split, split_check = False
+    def player_turn_loop(self, deck):
+        for player in self.player_list:
+            print("{}'s turn...".format(player.name))
+
+            double_down, split, split_check = False, False, False
 
             while True:
+                player.update_points()
+                player.print_hand()
+                print()
                 # If player drew a pair, offer choice to split hand.
                 if player.hand[0] == player.hand[1] and not split_check:
                     split_choice = yes_no_choice("You got a pair. Would you like to split your hand? Type 'y' or 'n': ")
@@ -83,8 +86,42 @@ class Game:
                         else:
                             split = True
                             player.split_cards()
-                    split_check = True
+                    split_check = True  # Ensure we only offer split option once
                     continue
+
+                # Main loop functionality
+                if player.points == 21:
+                    print("Congratulations, {}! You got Blackjack.".format(player))
+                    break
+                elif player.points > 21:
+                    print("BUST! Sorry {}, your turn is over.".format(player))
+                    break
+                elif double_down:
+                    break
+                else:
+                    choice = player_choice(double_down)
+                    if choice == 'stand':
+                        print('{} chose stand. Next turn...'.format(player))
+                        break
+                    elif choice == 'hit':
+                        print('{} chose hit. Dealing another card...'.format(player))
+                        player.hit(deck, player.hand)
+                        continue
+                    elif choice == 'doubledown':
+                        print('{} chose doubledown. Doubling wager and dealing one more card...'.format(player))
+                        double_wager = player.set_wager(player.wager)
+                        if double_wager == -1:
+                            print("Sorry, you don't have enough chips to double your wager.")
+                        else:
+                            player.hit(deck, player.hand)
+                        double_down = True
+                        continue
+                    elif choice == 'surrender':
+                        print('{} chose surrender. Discarding hand and returning half your wager.'.format(player))
+                        player.surrender()
+                        break
+
+
 
 
 

@@ -27,15 +27,18 @@ class Player:
     def update_points(self):
         self.points = sum_points_in_hand(self.hand)
 
+    def update_split_points(self):
+        self.split_points = sum_points_in_hand(self.split_hand)
+
     def print_hand(self):
-        self.update_points()
+        # self.update_points()
         print("{}'s hand: {} (point total: {}, bet: {}, remaining chips: {})".format(self.name, self.hand,
                                                                                      self.points, self.wager,
                                                                                      self.chips))
 
     def set_wager(self, wager):
         if wager <= self.chips:
-            self.wager = wager
+            self.wager += wager
             self.chips -= wager
         else:
             return -1
@@ -47,8 +50,12 @@ class Player:
         else:
             return -1
 
-    def hit(self, deck):
-        self.hand.append(deck.draw())
+    def hit(self, deck, hand):
+        # self.hand.append(deck.draw())
+        hand.append(deck.draw())
+
+    # def split_hit(self, deck):
+        # self.split_hand.append(deck.draw())
 
     def double_down(self):
         # self.hit(deck)  # remove this logic from doubledown, handle in hit only

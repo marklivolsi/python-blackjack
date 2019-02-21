@@ -18,19 +18,19 @@ def yes_no_choice(text):
     return False
 
 
-def player_choice(split, double_down):
+def player_choice(double_down):
     choice = None
-    if not double_down and not split:
-        while choice not in ('hit', 'doubledown', 'split', 'surrender'):
-            choice = input("Would you like to hit, doubledown, split, or surrender?")
-        return choice
-    elif not double_down and split:
-        while choice not in ('hit', 'doubledown', 'surrender'):
-            choice = input("Would you like to hit, doubledown, or surrender?")
+    # if not double_down and not split:
+    #     while choice not in ('hit', 'doubledown', 'split', 'surrender'):
+    #         choice = input("Would you like to hit, doubledown, split, or surrender?")
+    #     return choice
+    if not double_down:
+        while choice not in ('stand','hit', 'doubledown', 'surrender'):
+            choice = input("Would you like to stand, hit, doubledown, or surrender?: ")
         return choice
     else:
-        while choice not in ('hit', 'surrender'):
-            choice = input("Would you like to hit or surrender?")
+        while choice not in ('stand', 'hit', 'surrender'):
+            choice = input("Would you like to stand, hit, or surrender?: ")
         return choice
 
 
@@ -46,8 +46,6 @@ def set_num_players(max_num):
 
 def sum_points_in_hand(hand):
     total = sum(card.point_value for card in hand)
-    if total <= 21:
-        return total
-    elif any(card.value == 'Ace' for card in hand):
+    if total > 21 and any(card.value == 'Ace' for card in hand):
         total -= 10
-        return total
+    return total

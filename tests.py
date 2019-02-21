@@ -61,7 +61,7 @@ class TestPlayer(unittest.TestCase):
         """ Test that hit function removes one card from deck and places in player hand """
         deck = Deck()
         player = Player()
-        player.hit(deck)
+        player.hit(deck, player.hand)
 
         self.assertEqual(len(player.hand), 1)
         self.assertEqual(len(deck.cards), 51)
@@ -79,7 +79,7 @@ class TestPlayer(unittest.TestCase):
         """ Test that surrender returns half of wager to chips, clears hand, and clears wager  """
         deck = Deck()
         player = Player()
-        player.hit(deck)
+        player.hit(deck, player.hand)
         player.set_wager(50)
         player.surrender()
 
@@ -91,8 +91,8 @@ class TestPlayer(unittest.TestCase):
         """ Test split wager adds equal wager to split hand, removes correctly from chips, returns -1 if too large """
         deck = Deck()
         player = Player()
-        player.hit(deck)
-        player.hit(deck)
+        player.hit(deck, player.hand)
+        player.hit(deck, player.hand)
         player.set_wager(50)
         player.set_split_wager()
 
