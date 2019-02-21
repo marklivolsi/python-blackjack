@@ -79,5 +79,6 @@ class TestGame(unittest.TestCase):
         self.assertEqual(len(player.hand), 2)
         self.assertEqual(len(game.deck.cards), 50)
 
+
 if __name__ == '__main__':
     unittest.main()

@@ -1,6 +1,6 @@
 from cards import Deck
 from player import Player, Dealer
-from helpers import set_num_players, get_int_input
+from helpers import *
 
 
 max_players = 10

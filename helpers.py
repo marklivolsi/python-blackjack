@@ -17,3 +17,12 @@ def set_num_players(max_num):
         except ValueError:
             continue
     return num_players
+
+
+def sum_points_in_hand(hand):
+    total = sum(card.point_value for card in hand)
+    if total <= 21:
+        return total
+    elif any(card.value == 'Ace' for card in hand):
+        total -= 10
+        return total
