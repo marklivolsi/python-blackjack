@@ -23,7 +23,9 @@ class Game:
         else:
             print("Dealer's hand: [{}, ???]".format(self.dealer.hand[0]))
         for player in self.player_list:
-            player.print_hand()
+            player.print_hand(player.hand)
+            # if player.split_hand:
+            #     player.print_hand(player.split_hand)
         print()
 
     def set_game_type(self):
@@ -65,31 +67,38 @@ class Game:
     #     for player in self.player_list:
     #         player.points = sum_points_in_hand(player.hand)
 
+    def set_all_wagers(self):
+        for player in self.player_list:
+            wager = get_int_input('{}, please set your wager (remaining chips: {}): '.format(player, player.chips))
+            player.set_wager(wager)
 
     def player_turn_loop(self, deck):
         for player in self.player_list:
             print("{}'s turn...".format(player.name))
 
-            double_down, split, split_check = False, False, False
-
+            # double_down, split, split_check = False, False, False
+            double_down = False
             while True:
                 player.update_points()
-                player.print_hand()
+                player.print_hand(player.hand)
                 print()
-                # If player drew a pair, offer choice to split hand.
-                if player.hand[0] == player.hand[1] and not split_check:
-                    split_choice = yes_no_choice("You got a pair. Would you like to split your hand? Type 'y' or 'n': ")
-                    if split_choice:
-                        split_wager = player.set_split_wager()
-                        if split_wager == -1:
-                            print("Sorry, you don't have enough chips to set a split wager.")
-                        else:
-                            split = True
-                            player.split_cards()
-                    split_check = True  # Ensure we only offer split option once
-                    continue
+                # # If player drew a pair, offer choice to split hand.
+                # if player.hand[0] == player.hand[1] and not split_check:
+                #     split_choice = yes_no_choice("You got a pair. Would you like to split your hand? Type 'y' or 'n': ")
+                #     if split_choice:
+                #         split_wager = player.set_split_wager()
+                #         if split_wager == -1:
+                #             print("Sorry, you don't have enough chips to set a split wager.")
+                #         else:
+                #             split = True
+                #             player.split_cards()
+                #             player.hit(deck, player.hand)
+                #             player.hit(deck, player.split_hand)
+                #     split_check = True  # Ensure we only offer split option once
+                #     continue
 
                 # Main loop functionality
+
                 if player.points == 21:
                     print("Congratulations, {}! You got Blackjack.".format(player))
                     break
@@ -120,50 +129,3 @@ class Game:
                         print('{} chose surrender. Discarding hand and returning half your wager.'.format(player))
                         player.surrender()
                         break
-
-
-
-
-
-
-
-            if split: pass
-                # run loop a second time if split is true
-
-            #
-            # while True:
-            #     if player.points == 21:
-            #         print("Congratulations, {}! You got Blackjack.".format(player))
-            #         break
-            #     elif player.points > 21:
-            #         print("BUST! Sorry {}, your turn is over.".format(player))
-            #         break
-            #     elif double_down:
-            #         break
-
-
-
-
-
-
-    # def player_turn(self, player):
-    #     double_down, split = False
-    #     while True:
-    #         if player.points == 21:
-    #             print("Congratulations, {}! You got Blackjack.".format(player.name))
-    #             break
-    #         elif player.points > 21:
-    #             print("BUST! Sorry {}, your turn is over.".format(player.name))
-    #             break
-    #         elif double_down:
-    #             break
-    #
-    #         if not split and player.hand[0] == player.hand[1]:
-    #             text = """You drew a pair. Would you like to split and play two hands? You must wager the same amount
-    #                       on your second hand. Type 'y' for yes, or 'n' for no: """
-    #             split = yes_no_choice(text)
-    #             if split:
-    #                 player.split()
-
-    # def play_hand(self, player, deck):
-    #     double_down, split = False

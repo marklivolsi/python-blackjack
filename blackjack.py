@@ -8,8 +8,9 @@ def main():
     while True:
         game.set_game_type()
         game.initialize_players()
+        deck = Deck()
         while True:
-            deck = Deck()
+            game.set_all_wagers()
             print("Dealing cards...")
             game.draw_hands(deck)
             for player in game.player_list:

@@ -15,11 +15,11 @@ class Player:
         self.name = name
         self.chips = 1000
         self.hand = []
-        self.split_hand = []
+        # self.split_hand = []
         self.wager = 0
-        self.split_wager = 0
+        # self.split_wager = 0
         self.points = 0
-        self.split_points = 0
+        # self.split_points = 0
 
     def __repr__(self):
         return self.name
@@ -27,12 +27,11 @@ class Player:
     def update_points(self):
         self.points = sum_points_in_hand(self.hand)
 
-    def update_split_points(self):
-        self.split_points = sum_points_in_hand(self.split_hand)
+    # def update_split_points(self):
+    #     self.split_points = sum_points_in_hand(self.split_hand)
 
-    def print_hand(self):
-        # self.update_points()
-        print("{}'s hand: {} (point total: {}, bet: {}, remaining chips: {})".format(self.name, self.hand,
+    def print_hand(self, hand):
+        print("{}'s hand: {} (point total: {}, bet: {}, remaining chips: {})".format(self.name, hand,
                                                                                      self.points, self.wager,
                                                                                      self.chips))
 
@@ -43,12 +42,12 @@ class Player:
         else:
             return -1
 
-    def set_split_wager(self):
-        if self.wager <= self.chips:
-            self.split_wager = self.wager
-            self.chips -= self.wager
-        else:
-            return -1
+    # def set_split_wager(self):
+    #     if self.wager <= self.chips:
+    #         self.split_wager = self.wager
+    #         self.chips -= self.wager
+    #     else:
+    #         return -1
 
     def hit(self, deck, hand):
         # self.hand.append(deck.draw())
@@ -67,8 +66,8 @@ class Player:
         self.chips += self.wager / 2
         self.wager = 0
 
-    def split_cards(self):  # split wager will be set separately
-        self.split_hand.append(self.hand.pop())
+    # def split_cards(self):  # split wager will be set separately
+    #     self.split_hand.append(self.hand.pop())
 
     # def player_turn(self, deck):
     #     self.update_points()
