@@ -21,6 +21,9 @@ class Player:
         self.points = 0
         self.split_points = 0
 
+    def __repr__(self):
+        return self.name
+
     def update_points(self):
         self.points = sum_points_in_hand(self.hand)
 

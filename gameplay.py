@@ -56,7 +56,14 @@ class Game:
                 player.chips = chips
                 self.player_list.append(player)
 
-    
+    def draw_hands(self, deck):
+        for _ in range(2):
+            self.dealer.hit(deck)
+            for player in self.player_list:
+                player.hit(deck)
+
+    # def player_turn(self, player):
+    #     player.update_points()
 
     # def player_turn(self, player):
     #     double_down, split = False
@@ -79,17 +86,3 @@ class Game:
 
     # def play_hand(self, player, deck):
     #     double_down, split = False
-    #
-
-
-
-
-
-    # def draw_two_cards(self, player):
-    #     for _ in range(2):
-    #         player.hand.append(self.deck.draw())
-
-    # def hit(self, player):
-    #     player.hand.append(self.deck.draw())
-
-    # def doubledown(self, player): pass
