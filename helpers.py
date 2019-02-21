@@ -20,10 +20,6 @@ def yes_no_choice(text):
 
 def player_choice(double_down):
     choice = None
-    # if not double_down and not split:
-    #     while choice not in ('hit', 'doubledown', 'split', 'surrender'):
-    #         choice = input("Would you like to hit, doubledown, split, or surrender?")
-    #     return choice
     if not double_down:
         while choice not in ('stand','hit', 'doubledown', 'surrender'):
             choice = input("Would you like to stand, hit, doubledown, or surrender?: ")

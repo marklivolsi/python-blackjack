@@ -87,22 +87,6 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(player.chips, 975)
         self.assertEqual(len(player.hand), 0)
 
-    # def test_split_wager(self):
-    #     """ Test split wager adds equal wager to split hand, removes correctly from chips, returns -1 if too large """
-    #     deck = Deck()
-    #     player = Player()
-    #     player.hit(deck, player.hand)
-    #     player.hit(deck, player.hand)
-    #     player.set_wager(50)
-    #     player.set_split_wager()
-    #
-    #     self.assertEqual(player.wager, 50)
-    #     self.assertEqual(player.split_wager, 50)
-    #     self.assertEqual(player.chips, 900)
-    #
-    #     player.set_wager(451)
-    #     a = player.set_split_wager()
-    #     self.assertEqual(a, -1)
 
 class TestGame(unittest.TestCase):
 

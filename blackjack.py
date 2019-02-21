@@ -1,5 +1,4 @@
 from gameplay import Game
-from player import Player
 from cards import Deck
 
 

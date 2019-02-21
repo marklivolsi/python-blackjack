@@ -1,5 +1,4 @@
-# from cards import Deck
-from player import Player #, Dealer
+from player import Player
 from helpers import *
 
 
@@ -11,9 +10,7 @@ class Game:
         self.num_players = 1
         self.quick_game = quick_game
         self.player_list = []
-        # self.deck = Deck()  # Deck doesn't need to be a game member. Move player methods to player class
-        # self.deck.reload()
-        self.dealer = Player(name='Dealer')  # Dealer()
+        self.dealer = Player(name='Dealer')
 
     def print_instructions(self): pass
 
@@ -24,8 +21,6 @@ class Game:
             print("Dealer's hand: [{}, ???]".format(self.dealer.hand[0]))
         for player in self.player_list:
             player.print_hand(player.hand)
-            # if player.split_hand:
-            #     player.print_hand(player.split_hand)
         print()
 
     def set_game_type(self):
@@ -63,10 +58,6 @@ class Game:
             for player in self.player_list:
                 player.hit(deck, player.hand)
 
-    # def update_all_points(self):
-    #     for player in self.player_list:
-    #         player.points = sum_points_in_hand(player.hand)
-
     def set_all_wagers(self):
         for player in self.player_list:
             wager = get_int_input('{}, please set your wager (remaining chips: {}): '.format(player, player.chips))
@@ -76,29 +67,13 @@ class Game:
         for player in self.player_list:
             print("{}'s turn...".format(player.name))
 
-            # double_down, split, split_check = False, False, False
             double_down = False
             while True:
                 player.update_points()
                 player.print_hand(player.hand)
                 print()
-                # # If player drew a pair, offer choice to split hand.
-                # if player.hand[0] == player.hand[1] and not split_check:
-                #     split_choice = yes_no_choice("You got a pair. Would you like to split your hand? Type 'y' or 'n': ")
-                #     if split_choice:
-                #         split_wager = player.set_split_wager()
-                #         if split_wager == -1:
-                #             print("Sorry, you don't have enough chips to set a split wager.")
-                #         else:
-                #             split = True
-                #             player.split_cards()
-                #             player.hit(deck, player.hand)
-                #             player.hit(deck, player.split_hand)
-                #     split_check = True  # Ensure we only offer split option once
-                #     continue
 
                 # Main loop functionality
-
                 if player.points == 21:
                     print("Congratulations, {}! You got Blackjack.".format(player))
                     break
@@ -123,7 +98,7 @@ class Game:
                             print("Sorry, you don't have enough chips to double your wager.")
                         else:
                             player.hit(deck, player.hand)
-                        double_down = True
+                            double_down = True
                         continue
                     elif choice == 'surrender':
                         print('{} chose surrender. Discarding hand and returning half your wager.'.format(player))
